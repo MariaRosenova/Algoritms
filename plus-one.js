@@ -3,21 +3,24 @@
  * @return {number[]}
  */
 var plusOne = function (digits) {
-  //let minElement = digits[0];
-  let number = digits.join(""); //to string
-  let increment = 1;
+  let carry = 1; // start with carry of 1
 
-  calculate(number, increment);
+  for (let i = digits.length - 1; i >= 0; i--) {
+    let sum = digits[i] + carry; // add the curr digit and the carry
+    digits[i] = sum % 10; // update the digit in the array
+    carry = Math.floor(sum / 10); // update the carry
 
-  function calculate(number, minElement) {
-    let result = Number(number) + minElement;
-    let arrayOfDigits = Array.from(String(result), Number);
-    return arrayOfDigits;
+    if (carry === 0) {
+      // if the carry becomes zero, no need to continue
+      break;
+    }
   }
+  // if there is still a carry, it means we need to add an additional digit
+  if (carry > 0){
+    digits.unshift(carry);
+  }
+  
+  return digits;
 };
-let digits = [1, 0];
+let digits = [4,3,2,1];
 console.log(plusOne(digits));
-
-// if (digits[i] < minElement) {
-//     minElement = digits[i];
-//   }
